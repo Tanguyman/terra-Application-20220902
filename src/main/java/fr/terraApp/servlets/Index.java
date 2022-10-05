@@ -2,7 +2,10 @@ package fr.terraApp.servlets;
 
 import java.io.IOException;
 
+import fr.terraApp.dao.AdresseEntreesDao;
+import fr.terraApp.dao.DaoException;
 import fr.terraApp.dao.Database;
+import fr.terraApp.dao.ZoneChalandiseDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,8 +31,25 @@ public class Index extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		// Récupérer les paramètres du Header (POST)
 		Database.Connect();
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int idClientFromVitrine = Integer.parseInt( request.getParameter("id") );
+		
+		// MES ADRESSES
+		ZoneChalandiseDao zDao = new ZoneChalandiseDao();
+		AdresseEntreesDao aeDao = new AdresseEntreesDao();
+		try {
+			//System.out.println(zDao.getAllAddresses(idClientFromVitrine));
+			request.setAttribute("zCol", zDao.getAllFromAddress(idClientFromVitrine));
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("activeMesAdresses", "active");
+		request.getRequestDispatcher("mesAdresses.jsp").forward(request, response);
 	}
 
 	/**

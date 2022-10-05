@@ -19,4 +19,14 @@
     <servlet-name>Index</servlet-name>
     <url-pattern>/Index</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Header</display-name>
+    <servlet-name>Header</servlet-name>
+    <servlet-class>fr.terraApp.servlets.Header</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Header</servlet-name>
+    <url-pattern>/Header</url-pattern>
+  </servlet-mapping>
 </web-app>
